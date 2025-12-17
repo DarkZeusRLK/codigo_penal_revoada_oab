@@ -3,26 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // 0. SISTEMA DE PATCH NOTES (NOVIDADE)
   // =========================================================
 
-  // CONFIGURE AQUI SEMPRE QUE ATUALIZAR O CÓDIGO:
-  const VERSAO_ATUAL = "3.2"; // Mude esse número para o popup aparecer para todos
-
-  const CONTEUDO_PATCH_NOTES = `
-      <h4>🚀 Novidades da Versão ${VERSAO_ATUAL}</h4>
-      <ul>
-          <li><strong>📸 Foto Extra:</strong> Adicionado botão para incluir foto do porta-malas ou evidência extra.</li>
-          <li><strong>💰 Fiança Ajustada:</strong> O valor da fiança agora é calculado automaticamente como <strong>3x o valor da multa</strong>.</li>
-          <li><strong>🛑 Teto de Fiança:</strong> Adicionado limitador automático. A fiança máxima agora é <strong>R$ 1.400.000</strong>, mesmo que o cálculo ultrapasse.</li>
-          <li><strong>📊 Divisão de Valores:</strong> O cálculo de repasse (Advogado/Policia/Painel) foi atualizado para refletir o novo valor da fiança.</li>
-          <li><strong>🔫 Porte de Arma:</strong> O status do porte agora aparece no relatório do Discord.</li>
-      </ul>
-      
-      <h4>🐛 Correções</h4>
-      <ul>
-          <li>Correção na verificação de logins expirados.</li>
-          <li>Melhoria na estabilidade do upload de imagens.</li>
-      </ul>
-  `;
-
   function verificarAtualizacao() {
     const versaoSalva = localStorage.getItem("sistema_versao");
     const modalPatch = document.getElementById("modal-patch-notes");
