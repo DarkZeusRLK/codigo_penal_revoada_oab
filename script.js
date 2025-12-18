@@ -649,7 +649,7 @@ document.addEventListener("DOMContentLoaded", function () {
     selectedCrimes.splice(idx, 1);
     var item = document.querySelector(`.crime-item[data-artigo="${c.artigo}"]`);
     if (item) item.classList.remove("selected");
-    if (c.artigo === "137") {
+    if (c.artigo === "138") {
       containerDinheiroSujo.classList.add("hidden");
       inputDinheiroSujo.value = "";
     }
@@ -712,7 +712,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // 4. TRAVA: MUNIÇÕES
-        const MUNICOES_CONFLITANTES = ["128", "129"];
+        const MUNICOES_CONFLITANTES = ["129", "130"];
         if (MUNICOES_CONFLITANTES.includes(artigo)) {
           if (
             selectedCrimes.some((c) => MUNICOES_CONFLITANTES.includes(c.artigo))
@@ -725,7 +725,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // 5. TRAVA: ITENS ILEGAIS
-        const ITENS_CONFLITANTES = ["124", "136"];
+        const ITENS_CONFLITANTES = ["125", "137"];
         if (ITENS_CONFLITANTES.includes(artigo)) {
           if (
             selectedCrimes.some((c) => ITENS_CONFLITANTES.includes(c.artigo))
@@ -757,7 +757,7 @@ document.addEventListener("DOMContentLoaded", function () {
         var infiancavel = this.dataset.infiancavel === "true";
         selectedCrimes.push({ artigo, nome, pena, multa, infiancavel });
         this.classList.add("selected");
-        if (artigo === "137") {
+        if (artigo === "138") {
           containerDinheiroSujo.classList.remove("hidden");
           inputDinheiroSujo.focus();
         }
@@ -936,7 +936,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       // TRAVA: DINHEIRO SUJO
-      var temDinheiroSujo = selectedCrimes.some((c) => c.artigo === "137");
+      var temDinheiroSujo = selectedCrimes.some((c) => c.artigo === "138");
       if (
         temDinheiroSujo &&
         (!inputDinheiroSujo.value || inputDinheiroSujo.value.trim() === "")
@@ -951,7 +951,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // TRAVA: STATUS DO RÉU (PRIMÁRIO/REINCIDENTE)
       var isPrimario = document.getElementById("atenuante-primario").checked;
-      var isReincidente = selectedCrimes.some((c) => c.artigo === "161");
+      var isReincidente = selectedCrimes.some((c) => c.artigo === "162");
 
       if (!isPrimario && !isReincidente) {
         mostrarAlerta("⚠️ Defina se o Réu é Primário ou Reincidente!", "error");
