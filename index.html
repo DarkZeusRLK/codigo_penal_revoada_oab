@@ -12,7 +12,7 @@
 
 <body>
 
-  <div class="container" id="app-content">
+  <<div class="container" id="app-content">
     <audio id="bg-music" loop>
       <source src="Música/FusionRj.mp4" type="audio/mpeg">
       Seu navegador não suporta áudio.
@@ -45,6 +45,7 @@
         </div>
       </div>
     </header>
+
     <section class="card dados-preso-container">
       <div class="card-header full-width">
         <i class="fa-solid fa-user-tag"></i> DADOS E EVIDÊNCIAS
@@ -78,16 +79,6 @@
       </div>
 
       <div class="upload-section">
-        <div class="upload-box" id="box-upload-preso" tabindex="0">
-          <label>📸 Foto do Preso (Opcional)</label>
-          <p class="paste-hint"><i class="fa-regular fa-clipboard"></i> Clique aqui e aperte Ctrl+V</p>
-          <div class="preview-area" id="preview-box-preso">
-            <i class="fa-solid fa-user placeholder-icon"></i>
-            <img id="img-preview-preso" class="hidden" src="">
-          </div>
-          <input type="file" id="upload-preso" accept="image/*">
-        </div>
-
         <div class="upload-box" id="box-upload-mochila" tabindex="0">
           <label>🎒 Foto Inventário (Opcional)</label>
           <p class="paste-hint"><i class="fa-regular fa-clipboard"></i> Clique aqui e aperte Ctrl+V</p>
@@ -97,6 +88,7 @@
           </div>
           <input type="file" id="upload-mochila" accept="image/*">
         </div>
+
         <div class="upload-box hidden" id="box-upload-deposito" tabindex="0" style="border-color: var(--color-success);">
           <label style="color: var(--color-success);">💸 Comprovante Depósito</label>
           <p class="paste-hint"><i class="fa-regular fa-clipboard"></i> Clique aqui e aperte Ctrl+V</p>
@@ -363,14 +355,14 @@
         </div>
 
         <div class="action-buttons">
-          <button id="btn-enviar" class="btn-action"><i class="fa-solid fa-calculator"></i> CALCULAR / REGISTRAR</button>
-          <button id="btn-limpar" class="btn-action btn-limpar"><i class="fa-solid fa-eraser"></i> LIMPAR TUDO</button>
+          <button id="btn-enviar" class="btn-primary"><i class="fa-solid fa-copy"></i> COPIAR RELATÓRIO</button>
+          <button id="btn-limpar" class="btn-secondary"><i class="fa-solid fa-trash-can"></i> LIMPAR TUDO</button>
         </div>
 
       </section>
     </main>
-  </div>
-  <script src="script.js"></script>
+    </div>
+    <script src="script.js"></script>
 </body>
 
 </html>
