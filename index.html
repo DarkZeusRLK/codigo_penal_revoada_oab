@@ -11,364 +11,290 @@
 </head>
 
 <body>
-
-  <div class="container" id="app-content">
-    <audio id="bg-music" loop>
-      <source src="Música/FusionRj.mp4" type="audio/mpeg">
-      Seu navegador não suporta áudio.
-    </audio>
-
-    <button id="btn-music-toggle" class="music-btn" title="Pausar/Tocar Música">
-      <i class="fa-solid fa-volume-high"></i>
-    </button>
-    <header>
-      <div class="badge-area">
-        <img src="Imagens/Brasão_da_Polícia_Civil_do_Estado_do_Rio_de_Janeiro (1).png" alt="Emblema 1" class="badge">
-        <img src="Imagens/Brasão_da_Polícia_Militar_do_Estado_do_Rio_de_Janeiro_-_PMERJ.png" alt="Emblema 2" class="badge">
-        <img src="Imagens/Policia-federal-logo.png" alt="Emblema 3" class="badge">
-        <img src="Imagens/PRF_new.png" alt="Emblema 4" class="badge">
+  <header>
+    <div class="badge-area">
+      <img src="Imagens/Brasão_da_Polícia_Civil_do_Estado_do_Rio_de_Janeiro (1).png" alt="Emblema 1" class="badge">
+      <img src="Imagens/Brasão_da_Polícia_Militar_do_Estado_do_Rio_de_Janeiro_-_PMERJ.png" alt="Emblema 2" class="badge">
+      <img src="Imagens/Policia-federal-logo.png" alt="Emblema 3" class="badge">
+      <img src="Imagens/PRF_new.png" alt="Emblema 4" class="badge">
+    </div>
+    <div class="logo-area">
+      <img src="Imagens/image.png" alt="REVOADA Logo" class="logo-revoada" style="height: 50px;">
+      <div class="header-text">
+        <h1>CALCULADORA PENAL</h1>
+        <p class="titulo"><b>Sistema de Cálculo de Sentença - Acesso Advocacia</b></p>
       </div>
-      <div class="logo-area">
-        <img src="Imagens/image.png" alt="REVOADA Logo" class="logo-revoada" style="height: 50px;">
-        <div class="header-text">
-          <h1>CALCULADORA PENAL</h1>
-          <p class="titulo"><b>Sistema de Cálculo de Sentença - Acesso Advocacia</b></p>
-        </div>
-      </div>
+    </div>
 
-      <div class="user-info">
-        <i class="fa-solid fa-scale-balanced" style="font-size: 24px; color: #fff; margin-right: 10px;"></i>
-        <div class="user-details">
-          <span class="user-label">Advogado(a):</span>
-          <input type="text" id="user-name" class="user-value" placeholder="Digite seu nome..." style="background: transparent; border: none; border-bottom: 1px solid #ccc; color: white; outline: none; padding: 2px;">
-          <input type="hidden" id="user-id-hidden" value="advogado_externo">
-        </div>
+    <div class="user-info">
+      <i class="fa-solid fa-scale-balanced" style="font-size: 24px; color: #fff; margin-right: 10px;"></i>
+      <div class="user-details">
+        <span class="user-label">Advogado(a):</span>
+        <input type="text" id="user-name" class="user-value" placeholder="Digite seu nome..." style="background: transparent; border: none; border-bottom: 1px solid #ccc; color: white; outline: none; padding: 2px;">
+        <input type="hidden" id="user-id-hidden" value="advogado_externo">
       </div>
-    </header>
-    <section class="card dados-preso-container">
-      <div class="card-header full-width">
-        <i class="fa-solid fa-user-tag"></i> DADOS E EVIDÊNCIAS
+    </div>
+  </header>
+  <main class="main-content">
+
+    <section class="card crimes-aplicados">
+      <div class="card-header">
+        <i class="fa-solid fa-gavel"></i> CÁLCULO DE PENA
       </div>
 
-      <div class="dados-inputs">
-        <div class="input-group">
-          <label for="nome">Nome do Cliente (Preso):</label>
-          <input type="text" id="nome" placeholder="Nome completo">
-        </div>
-        <div class="input-group">
-          <label for="rg">RG do Cliente:</label>
-          <input type="text" id="rg" placeholder="RG">
-        </div>
-        <div class="input-group">
-          <label for="advogado">OAB / RG do Advogado:</label>
-          <input type="text" id="advogado" placeholder="Identificação do advogado">
-        </div>
+      <div class="crimes-list">
 
-        <div class="participantes-section">
-          <label><i class="fa-solid fa-users"></i> Oficiais Envolvidos (Opcional):</label>
-          <div class="participante-selector-row search-container">
-            <input type="text" id="search-oficial" class="form-search" placeholder="Nome do Oficial..." autocomplete="off">
-            <div id="dropdown-oficiais" class="dropdown-results hidden"></div>
-            <input type="hidden" id="selected-oficial-id">
-
-            <button id="btn-add-participante" class="btn-small"><i class="fa-solid fa-plus"></i></button>
+        <div class="crime-column">
+          <div class="category-title">CRIMES DIVERSOS</div>
+          <div class="category-content">
+            <div class="crime-item" data-artigo="101" data-pena="150" data-multa="25000" data-infiancavel="true"><span class="crime-name">Art. 101 - Azaralhamento Recrutamento**</span><button class="btn-info">Inafiançável</button></div>
+            <div class="crime-item" data-artigo="102" data-pena="55" data-multa="8000" data-infiancavel="true"><span class="crime-name">Art. 102 - Agressão a Funcionário Público**</span><button class="btn-info">Inafiançável</button></div>
+            <div class="crime-item" data-artigo="103" data-pena="60" data-multa="60000" data-infiancavel="true"><span class="crime-name">Art. 103 - Prevaricação**</span><button class="btn-info">Inafiançável</button></div>
           </div>
-          <div id="lista-participantes-visual" class="tags-container"></div>
-        </div>
-      </div>
 
-      <div class="upload-section">
-        <div class="upload-box" id="box-upload-preso" tabindex="0">
-          <label>📸 Foto do Preso (Opcional)</label>
-          <p class="paste-hint"><i class="fa-regular fa-clipboard"></i> Clique aqui e aperte Ctrl+V</p>
-          <div class="preview-area" id="preview-box-preso">
-            <i class="fa-solid fa-user placeholder-icon"></i>
-            <img id="img-preview-preso" class="hidden" src="">
+          <div class="category-title">CRIMES CONTRA A VIDA</div>
+          <div class="category-content">
+            <div class="crime-item" data-artigo="104" data-pena="60" data-multa="45000" data-infiancavel="true"><span class="crime-name">Art. 104 - Homicídio Doloso Qualificado**</span><button class="btn-info">Inafiançável</button></div>
+            <div class="crime-item" data-artigo="105" data-pena="45" data-multa="40000" data-infiancavel="true"><span class="crime-name">Art. 105 - Homicídio Doloso**</span><button class="btn-info">Inafiançável</button></div>
+            <div class="crime-item" data-artigo="106" data-pena="40" data-multa="8000" data-infiancavel="true"><span class="crime-name">Art. 106 - Tentativa de Homicídio**</span><button class="btn-info">Inafiançável</button></div>
+            <div class="crime-item" data-artigo="107" data-pena="25" data-multa="5000"><span class="crime-name">Art. 107 - Homicídio Culposo</span></div>
+            <div class="crime-item" data-artigo="108" data-pena="25" data-multa="5000"><span class="crime-name">Art. 108 - Homicídio Culposo no Trânsito</span></div>
           </div>
-          <input type="file" id="upload-preso" accept="image/*">
+
+          <div class="category-title">CRIMES CONTRA DIREITOS FUNDAMENTAIS</div>
+          <div class="category-content">
+            <div class="crime-item" data-artigo="109" data-pena="20" data-multa="7000"><span class="crime-name">Art. 109 - Lesão Corporal</span></div>
+            <div class="crime-item" data-artigo="110" data-pena="30" data-multa="20000" data-infiancavel="true"><span class="crime-name">Art. 110 - Sequestro**</span><button class="btn-info">Inafiançável</button></div>
+            <div class="crime-item" data-artigo="111" data-pena="15" data-multa="10000"><span class="crime-name">Art. 111 - Cárcere Privado</span></div>
+          </div>
+
+          <div class="category-title">CRIMES CONTRA O PATRIMÔNIO</div>
+          <div class="category-content">
+            <div class="crime-item" data-artigo="112" data-pena="10" data-multa="10000"><span class="crime-name">Art. 112 - Desmanche de Veículos</span></div>
+            <div class="crime-item" data-artigo="113" data-pena="15" data-multa="8000"><span class="crime-name">Art. 113 - Furto</span></div>
+            <div class="crime-item" data-artigo="114" data-pena="15" data-multa="8000"><span class="crime-name">Art. 114 - Receptação de Veículos</span></div>
+            <div class="crime-item" data-artigo="115" data-pena="25" data-multa="12000"><span class="crime-name">Art. 115 - Roubo de Inclução</span></div>
+            <div class="crime-item" data-artigo="116" data-pena="15" data-multa="5000"><span class="crime-name">Art. 116 - Tentativa de Furto</span></div>
+            <div class="crime-item" data-artigo="117" data-pena="15" data-multa="12000"><span class="crime-name">Art. 117 - Furto de Veículos</span></div>
+          </div>
+
+          <div class="category-title">CRIMES DE ROUBOS, FURTOS E VARIANTES</div>
+          <div class="category-content">
+            <div class="crime-item" data-artigo="118" data-pena="15" data-multa="5000"><span class="crime-name">Art. 118 - Roubo</span></div>
+            <div class="crime-item" data-artigo="119" data-pena="15" data-multa="15000"><span class="crime-name">Art. 119 - Furto a Caixa Eletrônico</span></div>
+            <div class="crime-item" data-artigo="120" data-pena="5" data-multa="5000"><span class="crime-name">Art. 120 - Extorsão</span></div>
+          </div>
+
+          <div class="category-title">CRIMES DE PORTE, POSSE E TRÁFICO</div>
+          <div class="category-content">
+            <div class="crime-item" data-artigo="121" data-pena="15" data-multa="10000"><span class="crime-name">Art. 121 - Posse de Suprimentos de Armas</span></div>
+            <div class="crime-item" data-artigo="122" data-pena="15" data-multa="10000"><span class="crime-name">Art. 122 - Posse de Suprimentos de Munição</span></div>
+            <div class="crime-item" data-artigo="123" data-pena="15" data-multa="10000"><span class="crime-name">Art. 123 - Posse de Suprimentos de Desmanche</span></div>
+
+            <div class="crime-item" data-artigo="124" data-pena="40" data-multa="50000">
+              <span class="crime-name">Art. 124 - Tráfico de Armas <span class="crime-condition">3+ armas</span></span>
+            </div>
+
+            <div class="crime-item" data-artigo="125" data-pena="40" data-multa="15000"><span class="crime-name">Art. 125 - Tráfico de Itens Ilegais</span></div>
+            <div class="crime-item" data-artigo="126" data-pena="25" data-multa="15000"><span class="crime-name">Art. 126 - Porte de Arma Pesada</span></div>
+            <div class="crime-item" data-artigo="127" data-pena="15" data-multa="5000"><span class="crime-name">Art. 127 - Porte de Arma Leve</span></div>
+            <div class="crime-item" data-artigo="128" data-pena="25" data-multa="0"><span class="crime-name">Art. 128 - Disparo de Arma de Fogo</span></div>
+
+            <div class="crime-item" data-artigo="129" data-pena="25" data-multa="20000">
+              <span class="crime-name">Art. 129 - Tráfico de Munições <span class="crime-condition">100 ou + unidades.</span></span>
+            </div>
+
+            <div class="crime-item" data-artigo="130" data-pena="15" data-multa="5000">
+              <span class="crime-name">Art. 130 - Posse de Munição <span class="crime-condition">1-99 unidades.</span></span>
+            </div>
+
+            <div class="crime-item" data-artigo="131" data-pena="15" data-multa="5000"><span class="crime-name">Art. 131 - Posse de Coletes</span></div>
+            <div class="crime-item" data-artigo="132" data-pena="0" data-multa="5000"><span class="crime-name">Art. 132 - Porte de Arma Branca</span></div>
+
+            <div class="crime-item" data-artigo="133" data-pena="35" data-multa="30000">
+              <span class="crime-name">Art. 133 - Tráfico de Drogas <span class="crime-condition">100 ou + unidades.</span></span>
+            </div>
+
+            <div class="crime-item" data-artigo="134" data-pena="20" data-multa="10000">
+              <span class="crime-name">Art. 134 - Aviãozinho <span class="crime-condition">6-99 unidades.</span></span>
+            </div>
+
+            <div class="crime-item" data-artigo="135" data-pena="10" data-multa="10000"><span class="crime-name">Art. 135 - Posse de Componentes Narcóticos</span></div>
+
+            <div class="crime-item" data-artigo="136" data-pena="10" data-multa="5000">
+              <span class="crime-name">Art. 136 - Posse de Drogas <span class="crime-condition">1-5 unidades.</span></span>
+            </div>
+
+            <div class="crime-item" data-artigo="137" data-pena="10" data-multa="10000"><span class="crime-name">Art. 137 - Posse de Itens Ilegais</span></div>
+            <div class="crime-item" data-artigo="138" data-pena="20" data-multa="0"><span class="crime-name">Art. 138 - Dinheiro Sujo</span></div>
+          </div>
         </div>
 
-        <div class="upload-box" id="box-upload-mochila" tabindex="0">
-          <label>🎒 Foto Inventário (Opcional)</label>
-          <p class="paste-hint"><i class="fa-regular fa-clipboard"></i> Clique aqui e aperte Ctrl+V</p>
-          <div class="preview-area" id="preview-box-mochila">
-            <i class="fa-solid fa-suitcase placeholder-icon"></i>
-            <img id="img-preview-mochila" class="hidden" src="">
+        <div class="crime-column">
+          <div class="category-title">CRIMES CONTRA A ORDEM PÚBLICA</div>
+          <div class="category-content">
+            <div class="crime-item" data-artigo="139" data-pena="25" data-multa="40000"><span class="crime-name">Art. 139 - Falsidade Ideológica</span></div>
+            <div class="crime-item" data-artigo="140" data-pena="25" data-multa="30000"><span class="crime-name">Art. 140 - Associação Criminosa</span></div>
+            <div class="crime-item" data-artigo="141" data-pena="15" data-multa="10000"><span class="crime-name">Art. 141 - Apologia ao Crime</span></div>
+            <div class="crime-item" data-artigo="142" data-pena="20" data-multa="25000"><span class="crime-name">Art. 142 - Posse de Arma em Público</span></div>
+            <div class="crime-item" data-artigo="143" data-pena="30" data-multa="20000"><span class="crime-name">Art. 143 - Tentativa de Suborno</span></div>
+            <div class="crime-item" data-artigo="144" data-pena="20" data-multa="10000"><span class="crime-name">Art. 144 - Ameaça</span></div>
+            <div class="crime-item" data-artigo="145" data-pena="15" data-multa="5000"><span class="crime-name">Art. 145 - Falsa Comunicação de Crime</span></div>
+            <div class="crime-item" data-artigo="146" data-pena="5" data-multa="5000"><span class="crime-name">Art. 146 - Desobediência 01</span></div>
+            <div class="crime-item" data-artigo="147" data-pena="10" data-multa="10000"><span class="crime-name">Art. 147 - Desobediência 02</span></div>
+            <div class="crime-item" data-artigo="148" data-pena="15" data-multa="15000"><span class="crime-name">Art. 148 - Desobediência 03</span></div>
+            <div class="crime-item" data-artigo="149" data-pena="20" data-multa="25000" data-infiancavel="true"><span class="crime-name">Art. 149 - Assédio Moral**</span><button class="btn-info">Inafiançável</button></div>
+            <div class="crime-item" data-artigo="150" data-pena="15" data-multa="10000"><span class="crime-name">Art. 150 - Atentado ao Pudor</span></div>
+            <div class="crime-item" data-artigo="151" data-pena="5" data-multa="15000"><span class="crime-name">Art. 151 - Vandalismo</span></div>
+            <div class="crime-item" data-artigo="152" data-pena="5" data-multa="5000"><span class="crime-name">Art. 152 - Invasão de Propriedade</span></div>
+            <div class="crime-item" data-artigo="153" data-pena="20" data-multa="30000"><span class="crime-name">Art. 153 - Abuso de Autoridade</span></div>
+            <div class="crime-item" data-artigo="154" data-pena="10" data-multa="10000"><span class="crime-name">Art. 154 - Uso de Máscara</span></div>
+            <div class="crime-item" data-artigo="155" data-pena="0" data-multa="15000"><span class="crime-name">Art. 155 - Uso de Equipamentos Restritos</span></div>
+            <div class="crime-item" data-artigo="156" data-pena="10" data-multa="5000"><span class="crime-name">Art. 156 - Omissão de Socorro</span></div>
+            <div class="crime-item" data-artigo="157" data-pena="20" data-multa="10000"><span class="crime-name">Art. 157 - Tentativa de Fuga</span></div>
+            <div class="crime-item" data-artigo="158" data-pena="30" data-multa="20000" data-infiancavel="true"><span class="crime-name">Art. 158 - Desacato 01**</span><button class="btn-info">Inafiançável</button></div>
+            <div class="crime-item" data-artigo="159" data-pena="35" data-multa="25000" data-infiancavel="true"><span class="crime-name">Art. 159 - Desacato 02**</span><button class="btn-info">Inafiançável</button></div>
+            <div class="crime-item" data-artigo="160" data-pena="40" data-multa="30000" data-infiancavel="true"><span class="crime-name">Art. 160 - Desacato 03**</span><button class="btn-info">Inafiançável</button></div>
+            <div class="crime-item" data-artigo="161" data-pena="15" data-multa="10000"><span class="crime-name">Art. 161 - Resistência à Prisão</span></div>
+            <div class="crime-item" data-artigo="162" data-pena="10" data-multa="0"><span class="crime-name">Art. 162 - Réu Reincidente</span></div>
+            <div class="crime-item" data-artigo="163" data-pena="10" data-multa="15000"><span class="crime-name">Art. 163 - Cúmplice</span></div>
+            <div class="crime-item" data-artigo="164" data-pena="15" data-multa="10000"><span class="crime-name">Art. 164 - Obstrução de Justiça</span></div>
+            <div class="crime-item" data-artigo="165" data-pena="15" data-multa="20000"><span class="crime-name">Art. 165 - Ocultação de Provas</span></div>
+            <div class="crime-item" data-artigo="166" data-pena="5" data-multa="5000"><span class="crime-name">Art. 166 - Vadiagem</span></div>
+            <div class="crime-item" data-artigo="167" data-pena="0" data-multa="10000"><span class="crime-name">Art. 167 - Perturbação do Sossego Alheio</span></div>
+            <div class="crime-item" data-artigo="168" data-pena="5" data-multa="15000"><span class="crime-name">Art. 168 - Calúnia, Injúria ou Difamação</span></div>
           </div>
-          <input type="file" id="upload-mochila" accept="image/*">
-        </div>
-        <div class="upload-box hidden" id="box-upload-deposito" tabindex="0" style="border-color: var(--color-success);">
-          <label style="color: var(--color-success);">💸 Comprovante Depósito</label>
-          <p class="paste-hint"><i class="fa-regular fa-clipboard"></i> Clique aqui e aperte Ctrl+V</p>
-          <div class="preview-area" id="preview-box-deposito">
-            <i class="fa-solid fa-receipt placeholder-icon" style="color: var(--color-success);"></i>
-            <img id="img-preview-deposito" class="hidden" src="">
+
+          <div class="category-title">CRIMES DE TRÂNSITO</div>
+          <div class="category-content">
+            <div class="crime-item" data-artigo="169" data-pena="0" data-multa="10000"><span class="crime-name">Art. 169 - Condução Imprudente</span></div>
+            <div class="crime-item" data-artigo="170" data-pena="0" data-multa="10000"><span class="crime-name">Art. 170 - Dirigir na Contra Mão</span></div>
+            <div class="crime-item" data-artigo="171" data-pena="0" data-multa="5000"><span class="crime-name">Art. 171 - Alta Velocidade</span></div>
+            <div class="crime-item" data-artigo="172" data-pena="0" data-multa="5000"><span class="crime-name">Art. 172 - Poluição Sonora</span></div>
+            <div class="crime-item" data-artigo="173" data-pena="10" data-multa="10000"><span class="crime-name">Art. 173 - Corridas Ilegais</span></div>
+            <div class="crime-item" data-artigo="174" data-pena="0" data-multa="5000"><span class="crime-name">Art. 174 - Uso Excessivo de Insufilm</span></div>
+            <div class="crime-item" data-artigo="175" data-pena="0" data-multa="2000"><span class="crime-name">Art. 175 - Veículo Muito Danificado</span></div>
+            <div class="crime-item" data-artigo="176" data-pena="0" data-multa="5000"><span class="crime-name">Art. 176 - Veículo Ilegalmente Estacionado</span></div>
+            <div class="crime-item" data-artigo="177" data-pena="0" data-multa="2000"><span class="crime-name">Art. 177 - Não Ceder Passagem a Viaturas</span></div>
+            <div class="crime-item" data-artigo="178" data-pena="0" data-multa="2000"><span class="crime-name">Art. 178 - Impedir o Fluxo do Tráfego</span></div>
+            <div class="crime-item" data-artigo="179" data-pena="10" data-multa="10000"><span class="crime-name">Art. 179 - Dano a Patrimônio Público</span></div>
           </div>
-          <input type="file" id="upload-deposito" accept="image/*">
         </div>
+
       </div>
     </section>
 
-    <main class="main-content">
+    <section class="card resumo-sentenca">
+      <div class="card-header">
+        <i class="fa-solid fa-scroll"></i> RESUMO DA SENTENÇA
+      </div>
 
-      <section class="card crimes-aplicados">
-        <div class="card-header">
-          <i class="fa-solid fa-gavel"></i> CÁLCULO DE PENA
+      <div class="resumo-section crimes-selecionados">
+        <div class="section-title">Crimes Selecionados</div>
+        <div class="section-subtitle">Artigos com ** são crimes sem direito a fiança.</div>
+        <div id="crimes-list-output" class="output-list">
+          <div class="empty-message">Nenhum crime selecionado</div>
+        </div>
+        <div id="alerta-pena-maxima" class="alert-box hidden">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span>PENA MÁXIMA DE 180 MESES ATINGIDA!</span>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="resumo-section pena-multa">
+        <div class="section-title">
+          <i class="fa-solid fa-hourglass-half"></i> Pena Total: <span id="pena-total">0 meses</span>
+        </div>
+        <div class="section-title">
+          <i class="fa-solid fa-money-bill-wave"></i> Multa Total: <span id="multa-total">R$0</span>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="resumo-section atenuantes">
+        <div class="section-title atenuantes-title"><i class="fa-solid fa-percent"></i> ATENUANTES / OUTROS:</div>
+
+        <div class="atenuante-item">
+          <input type="checkbox" id="atenuante-advogado" data-percent="-20" checked disabled>
+          <label for="atenuante-advogado" title="Fixo para versão de advogados">Advogado constituído (-20%)</label>
+        </div>
+        <div class="atenuante-item">
+          <input type="checkbox" id="atenuante-primario" data-percent="-10">
+          <label for="atenuante-primario">Réu primário (-10%)</label>
+        </div>
+        <div class="atenuante-item">
+          <input type="checkbox" id="atenuante-confesso" data-percent="-10">
+          <label for="atenuante-confesso">Réu confesso (-10%)</label>
         </div>
 
-        <div class="crimes-list">
-
-          <div class="crime-column">
-            <div class="category-title">CRIMES DIVERSOS</div>
-            <div class="category-content">
-              <div class="crime-item" data-artigo="101" data-pena="150" data-multa="25000" data-infiancavel="true"><span class="crime-name">Art. 101 - Azaralhamento Recrutamento**</span><button class="btn-info">Inafiançável</button></div>
-              <div class="crime-item" data-artigo="102" data-pena="55" data-multa="8000" data-infiancavel="true"><span class="crime-name">Art. 102 - Agressão a Funcionário Público**</span><button class="btn-info">Inafiançável</button></div>
-              <div class="crime-item" data-artigo="103" data-pena="60" data-multa="60000" data-infiancavel="true"><span class="crime-name">Art. 103 - Prevaricação**</span><button class="btn-info">Inafiançável</button></div>
-            </div>
-
-            <div class="category-title">CRIMES CONTRA A VIDA</div>
-            <div class="category-content">
-              <div class="crime-item" data-artigo="104" data-pena="60" data-multa="45000" data-infiancavel="true"><span class="crime-name">Art. 104 - Homicídio Doloso Qualificado**</span><button class="btn-info">Inafiançável</button></div>
-              <div class="crime-item" data-artigo="105" data-pena="45" data-multa="40000" data-infiancavel="true"><span class="crime-name">Art. 105 - Homicídio Doloso**</span><button class="btn-info">Inafiançável</button></div>
-              <div class="crime-item" data-artigo="106" data-pena="40" data-multa="8000" data-infiancavel="true"><span class="crime-name">Art. 106 - Tentativa de Homicídio**</span><button class="btn-info">Inafiançável</button></div>
-              <div class="crime-item" data-artigo="107" data-pena="25" data-multa="5000"><span class="crime-name">Art. 107 - Homicídio Culposo</span></div>
-              <div class="crime-item" data-artigo="108" data-pena="25" data-multa="5000"><span class="crime-name">Art. 108 - Homicídio Culposo no Trânsito</span></div>
-            </div>
-
-            <div class="category-title">CRIMES CONTRA DIREITOS FUNDAMENTAIS</div>
-            <div class="category-content">
-              <div class="crime-item" data-artigo="109" data-pena="20" data-multa="7000"><span class="crime-name">Art. 109 - Lesão Corporal</span></div>
-              <div class="crime-item" data-artigo="110" data-pena="30" data-multa="20000" data-infiancavel="true"><span class="crime-name">Art. 110 - Sequestro**</span><button class="btn-info">Inafiançável</button></div>
-              <div class="crime-item" data-artigo="111" data-pena="15" data-multa="10000"><span class="crime-name">Art. 111 - Cárcere Privado</span></div>
-            </div>
-
-            <div class="category-title">CRIMES CONTRA O PATRIMÔNIO</div>
-            <div class="category-content">
-              <div class="crime-item" data-artigo="112" data-pena="10" data-multa="10000"><span class="crime-name">Art. 112 - Desmanche de Veículos</span></div>
-              <div class="crime-item" data-artigo="113" data-pena="15" data-multa="8000"><span class="crime-name">Art. 113 - Furto</span></div>
-              <div class="crime-item" data-artigo="114" data-pena="15" data-multa="8000"><span class="crime-name">Art. 114 - Receptação de Veículos</span></div>
-              <div class="crime-item" data-artigo="115" data-pena="25" data-multa="12000"><span class="crime-name">Art. 115 - Roubo de Inclução</span></div>
-              <div class="crime-item" data-artigo="116" data-pena="15" data-multa="5000"><span class="crime-name">Art. 116 - Tentativa de Furto</span></div>
-              <div class="crime-item" data-artigo="117" data-pena="15" data-multa="12000"><span class="crime-name">Art. 117 - Furto de Veículos</span></div>
-            </div>
-
-            <div class="category-title">CRIMES DE ROUBOS, FURTOS E VARIANTES</div>
-            <div class="category-content">
-              <div class="crime-item" data-artigo="118" data-pena="15" data-multa="5000"><span class="crime-name">Art. 118 - Roubo</span></div>
-              <div class="crime-item" data-artigo="119" data-pena="15" data-multa="15000"><span class="crime-name">Art. 119 - Furto a Caixa Eletrônico</span></div>
-              <div class="crime-item" data-artigo="120" data-pena="5" data-multa="5000"><span class="crime-name">Art. 120 - Extorsão</span></div>
-            </div>
-
-            <div class="category-title">CRIMES DE PORTE, POSSE E TRÁFICO</div>
-            <div class="category-content">
-              <div class="crime-item" data-artigo="121" data-pena="15" data-multa="10000"><span class="crime-name">Art. 121 - Posse de Suprimentos de Armas</span></div>
-              <div class="crime-item" data-artigo="122" data-pena="15" data-multa="10000"><span class="crime-name">Art. 122 - Posse de Suprimentos de Munição</span></div>
-              <div class="crime-item" data-artigo="123" data-pena="15" data-multa="10000"><span class="crime-name">Art. 123 - Posse de Suprimentos de Desmanche</span></div>
-
-              <div class="crime-item" data-artigo="124" data-pena="40" data-multa="50000">
-                <span class="crime-name">Art. 124 - Tráfico de Armas <span class="crime-condition">3+ armas</span></span>
-              </div>
-
-              <div class="crime-item" data-artigo="125" data-pena="40" data-multa="15000"><span class="crime-name">Art. 125 - Tráfico de Itens Ilegais</span></div>
-              <div class="crime-item" data-artigo="126" data-pena="25" data-multa="15000"><span class="crime-name">Art. 126 - Porte de Arma Pesada</span></div>
-              <div class="crime-item" data-artigo="127" data-pena="15" data-multa="5000"><span class="crime-name">Art. 127 - Porte de Arma Leve</span></div>
-              <div class="crime-item" data-artigo="128" data-pena="25" data-multa="0"><span class="crime-name">Art. 128 - Disparo de Arma de Fogo</span></div>
-
-              <div class="crime-item" data-artigo="129" data-pena="25" data-multa="20000">
-                <span class="crime-name">Art. 129 - Tráfico de Munições <span class="crime-condition">100 ou + unidades.</span></span>
-              </div>
-
-              <div class="crime-item" data-artigo="130" data-pena="15" data-multa="5000">
-                <span class="crime-name">Art. 130 - Posse de Munição <span class="crime-condition">1-99 unidades.</span></span>
-              </div>
-
-              <div class="crime-item" data-artigo="131" data-pena="15" data-multa="5000"><span class="crime-name">Art. 131 - Posse de Coletes</span></div>
-              <div class="crime-item" data-artigo="132" data-pena="0" data-multa="5000"><span class="crime-name">Art. 132 - Porte de Arma Branca</span></div>
-
-              <div class="crime-item" data-artigo="133" data-pena="35" data-multa="30000">
-                <span class="crime-name">Art. 133 - Tráfico de Drogas <span class="crime-condition">100 ou + unidades.</span></span>
-              </div>
-
-              <div class="crime-item" data-artigo="134" data-pena="20" data-multa="10000">
-                <span class="crime-name">Art. 134 - Aviãozinho <span class="crime-condition">6-99 unidades.</span></span>
-              </div>
-
-              <div class="crime-item" data-artigo="135" data-pena="10" data-multa="10000"><span class="crime-name">Art. 135 - Posse de Componentes Narcóticos</span></div>
-
-              <div class="crime-item" data-artigo="136" data-pena="10" data-multa="5000">
-                <span class="crime-name">Art. 136 - Posse de Drogas <span class="crime-condition">1-5 unidades.</span></span>
-              </div>
-
-              <div class="crime-item" data-artigo="137" data-pena="10" data-multa="10000"><span class="crime-name">Art. 137 - Posse de Itens Ilegais</span></div>
-              <div class="crime-item" data-artigo="138" data-pena="20" data-multa="0"><span class="crime-name">Art. 138 - Dinheiro Sujo</span></div>
-            </div>
-          </div>
-
-          <div class="crime-column">
-            <div class="category-title">CRIMES CONTRA A ORDEM PÚBLICA</div>
-            <div class="category-content">
-              <div class="crime-item" data-artigo="139" data-pena="25" data-multa="40000"><span class="crime-name">Art. 139 - Falsidade Ideológica</span></div>
-              <div class="crime-item" data-artigo="140" data-pena="25" data-multa="30000"><span class="crime-name">Art. 140 - Associação Criminosa</span></div>
-              <div class="crime-item" data-artigo="141" data-pena="15" data-multa="10000"><span class="crime-name">Art. 141 - Apologia ao Crime</span></div>
-              <div class="crime-item" data-artigo="142" data-pena="20" data-multa="25000"><span class="crime-name">Art. 142 - Posse de Arma em Público</span></div>
-              <div class="crime-item" data-artigo="143" data-pena="30" data-multa="20000"><span class="crime-name">Art. 143 - Tentativa de Suborno</span></div>
-              <div class="crime-item" data-artigo="144" data-pena="20" data-multa="10000"><span class="crime-name">Art. 144 - Ameaça</span></div>
-              <div class="crime-item" data-artigo="145" data-pena="15" data-multa="5000"><span class="crime-name">Art. 145 - Falsa Comunicação de Crime</span></div>
-              <div class="crime-item" data-artigo="146" data-pena="5" data-multa="5000"><span class="crime-name">Art. 146 - Desobediência 01</span></div>
-              <div class="crime-item" data-artigo="147" data-pena="10" data-multa="10000"><span class="crime-name">Art. 147 - Desobediência 02</span></div>
-              <div class="crime-item" data-artigo="148" data-pena="15" data-multa="15000"><span class="crime-name">Art. 148 - Desobediência 03</span></div>
-              <div class="crime-item" data-artigo="149" data-pena="20" data-multa="25000" data-infiancavel="true"><span class="crime-name">Art. 149 - Assédio Moral**</span><button class="btn-info">Inafiançável</button></div>
-              <div class="crime-item" data-artigo="150" data-pena="15" data-multa="10000"><span class="crime-name">Art. 150 - Atentado ao Pudor</span></div>
-              <div class="crime-item" data-artigo="151" data-pena="5" data-multa="15000"><span class="crime-name">Art. 151 - Vandalismo</span></div>
-              <div class="crime-item" data-artigo="152" data-pena="5" data-multa="5000"><span class="crime-name">Art. 152 - Invasão de Propriedade</span></div>
-              <div class="crime-item" data-artigo="153" data-pena="20" data-multa="30000"><span class="crime-name">Art. 153 - Abuso de Autoridade</span></div>
-              <div class="crime-item" data-artigo="154" data-pena="10" data-multa="10000"><span class="crime-name">Art. 154 - Uso de Máscara</span></div>
-              <div class="crime-item" data-artigo="155" data-pena="0" data-multa="15000"><span class="crime-name">Art. 155 - Uso de Equipamentos Restritos</span></div>
-              <div class="crime-item" data-artigo="156" data-pena="10" data-multa="5000"><span class="crime-name">Art. 156 - Omissão de Socorro</span></div>
-              <div class="crime-item" data-artigo="157" data-pena="20" data-multa="10000"><span class="crime-name">Art. 157 - Tentativa de Fuga</span></div>
-              <div class="crime-item" data-artigo="158" data-pena="30" data-multa="20000" data-infiancavel="true"><span class="crime-name">Art. 158 - Desacato 01**</span><button class="btn-info">Inafiançável</button></div>
-              <div class="crime-item" data-artigo="159" data-pena="35" data-multa="25000" data-infiancavel="true"><span class="crime-name">Art. 159 - Desacato 02**</span><button class="btn-info">Inafiançável</button></div>
-              <div class="crime-item" data-artigo="160" data-pena="40" data-multa="30000" data-infiancavel="true"><span class="crime-name">Art. 160 - Desacato 03**</span><button class="btn-info">Inafiançável</button></div>
-              <div class="crime-item" data-artigo="161" data-pena="15" data-multa="10000"><span class="crime-name">Art. 161 - Resistência à Prisão</span></div>
-              <div class="crime-item" data-artigo="162" data-pena="10" data-multa="0"><span class="crime-name">Art. 162 - Réu Reincidente</span></div>
-              <div class="crime-item" data-artigo="163" data-pena="10" data-multa="15000"><span class="crime-name">Art. 163 - Cúmplice</span></div>
-              <div class="crime-item" data-artigo="164" data-pena="15" data-multa="10000"><span class="crime-name">Art. 164 - Obstrução de Justiça</span></div>
-              <div class="crime-item" data-artigo="165" data-pena="15" data-multa="20000"><span class="crime-name">Art. 165 - Ocultação de Provas</span></div>
-              <div class="crime-item" data-artigo="166" data-pena="5" data-multa="5000"><span class="crime-name">Art. 166 - Vadiagem</span></div>
-              <div class="crime-item" data-artigo="167" data-pena="0" data-multa="10000"><span class="crime-name">Art. 167 - Perturbação do Sossego Alheio</span></div>
-              <div class="crime-item" data-artigo="168" data-pena="5" data-multa="15000"><span class="crime-name">Art. 168 - Calúnia, Injúria ou Difamação</span></div>
-            </div>
-
-            <div class="category-title">CRIMES DE TRÂNSITO</div>
-            <div class="category-content">
-              <div class="crime-item" data-artigo="169" data-pena="0" data-multa="10000"><span class="crime-name">Art. 169 - Condução Imprudente</span></div>
-              <div class="crime-item" data-artigo="170" data-pena="0" data-multa="10000"><span class="crime-name">Art. 170 - Dirigir na Contra Mão</span></div>
-              <div class="crime-item" data-artigo="171" data-pena="0" data-multa="5000"><span class="crime-name">Art. 171 - Alta Velocidade</span></div>
-              <div class="crime-item" data-artigo="172" data-pena="0" data-multa="5000"><span class="crime-name">Art. 172 - Poluição Sonora</span></div>
-              <div class="crime-item" data-artigo="173" data-pena="10" data-multa="10000"><span class="crime-name">Art. 173 - Corridas Ilegais</span></div>
-              <div class="crime-item" data-artigo="174" data-pena="0" data-multa="5000"><span class="crime-name">Art. 174 - Uso Excessivo de Insufilm</span></div>
-              <div class="crime-item" data-artigo="175" data-pena="0" data-multa="2000"><span class="crime-name">Art. 175 - Veículo Muito Danificado</span></div>
-              <div class="crime-item" data-artigo="176" data-pena="0" data-multa="5000"><span class="crime-name">Art. 176 - Veículo Ilegalmente Estacionado</span></div>
-              <div class="crime-item" data-artigo="177" data-pena="0" data-multa="2000"><span class="crime-name">Art. 177 - Não Ceder Passagem a Viaturas</span></div>
-              <div class="crime-item" data-artigo="178" data-pena="0" data-multa="2000"><span class="crime-name">Art. 178 - Impedir o Fluxo do Tráfego</span></div>
-              <div class="crime-item" data-artigo="179" data-pena="10" data-multa="10000"><span class="crime-name">Art. 179 - Dano a Patrimônio Público</span></div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <section class="card resumo-sentenca">
-        <div class="card-header">
-          <i class="fa-solid fa-scroll"></i> RESUMO DA SENTENÇA
-        </div>
-
-        <div class="resumo-section crimes-selecionados">
-          <div class="section-title">Crimes Selecionados</div>
-          <div class="section-subtitle">Artigos com ** são crimes sem direito a fiança.</div>
-          <div id="crimes-list-output" class="output-list">
-            <div class="empty-message">Nenhum crime selecionado</div>
-          </div>
-          <div id="alerta-pena-maxima" class="alert-box hidden">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-            <span>PENA MÁXIMA DE 180 MESES ATINGIDA!</span>
+        <div class="calculated-row-radio">
+          <label>Reanimado no HP?</label>
+          <div class="radio-group">
+            <input type="radio" id="hp-nao" name="reanimado-hp" value="nao" checked>
+            <label for="hp-nao" class="radio-label">Não</label>
+            <input type="radio" id="hp-sim" name="reanimado-hp" value="sim">
+            <label for="hp-sim" class="radio-label">Sim</label>
           </div>
         </div>
+        <div id="container-hp-minutos" class="calculated-row hidden" style="margin-top: 5px;">
+          <label style="color: var(--color-info)">Desconto (Minutos):</label>
+          <input type="number" id="hp-minutos" placeholder="0" min="0">
+        </div>
 
+        <div class="calculated-row-radio">
+          <label>Possui porte de arma?</label>
+          <div class="radio-group">
+            <input type="radio" id="porte-nao" name="porte-arma" value="nao" checked>
+            <label for="porte-nao" class="radio-label">Não</label>
+            <input type="radio" id="porte-sim" name="porte-arma" value="sim">
+            <label for="porte-sim" class="radio-label">Sim</label>
+          </div>
+        </div>
         <hr>
-
-        <div class="resumo-section pena-multa">
-          <div class="section-title">
-            <i class="fa-solid fa-hourglass-half"></i> Pena Total: <span id="pena-total">0 meses</span>
-          </div>
-          <div class="section-title">
-            <i class="fa-solid fa-money-bill-wave"></i> Multa Total: <span id="multa-total">R$0</span>
-          </div>
-        </div>
-
-        <hr>
-
-        <div class="resumo-section atenuantes">
-          <div class="section-title atenuantes-title"><i class="fa-solid fa-percent"></i> ATENUANTES / OUTROS:</div>
-
-          <div class="atenuante-item">
-            <input type="checkbox" id="atenuante-advogado" data-percent="-20" checked disabled>
-            <label for="atenuante-advogado" title="Fixo para versão de advogados">Advogado constituído (-20%)</label>
-          </div>
-          <div class="atenuante-item">
-            <input type="checkbox" id="atenuante-primario" data-percent="-10">
-            <label for="atenuante-primario">Réu primário (-10%)</label>
-          </div>
-          <div class="atenuante-item">
-            <input type="checkbox" id="atenuante-confesso" data-percent="-10">
-            <label for="atenuante-confesso">Réu confesso (-10%)</label>
-          </div>
-
-          <div class="calculated-row-radio">
-            <label>Reanimado no HP?</label>
-            <div class="radio-group">
-              <input type="radio" id="hp-nao" name="reanimado-hp" value="nao" checked>
-              <label for="hp-nao" class="radio-label">Não</label>
-              <input type="radio" id="hp-sim" name="reanimado-hp" value="sim">
-              <label for="hp-sim" class="radio-label">Sim</label>
-            </div>
-          </div>
-          <div id="container-hp-minutos" class="calculated-row hidden" style="margin-top: 5px;">
-            <label style="color: var(--color-info)">Desconto (Minutos):</label>
-            <input type="number" id="hp-minutos" placeholder="0" min="0">
-          </div>
-
-          <div class="calculated-row-radio">
-            <label>Possui porte de arma?</label>
-            <div class="radio-group">
-              <input type="radio" id="porte-nao" name="porte-arma" value="nao" checked>
-              <label for="porte-nao" class="radio-label">Não</label>
-              <input type="radio" id="porte-sim" name="porte-arma" value="sim">
-              <label for="porte-sim" class="radio-label">Sim</label>
-            </div>
-          </div>
-          <hr>
-          <div id="container-radio-fianca" class="calculated-row-radio" style="background-color: rgba(16, 185, 129, 0.1); border-radius: 4px; padding: 10px;">
-            <label style="color: #fff; font-weight: bold;">Simulação de Fiança?</label>
-            <div class="radio-group">
-              <input type="radio" id="fianca-nao" name="pagou-fianca" value="nao" checked>
-              <label for="fianca-nao" class="radio-label">Não</label>
-              <input type="radio" id="fianca-sim" name="pagou-fianca" value="sim">
-              <label for="fianca-sim" class="radio-label">Sim</label>
-            </div>
-          </div>
-
-          <div class="calculated-row">
-            <label>Valor da Fiança Estimada</label>
-            <input type="text" value="R$ 0" id="fianca-output" readonly>
-          </div>
-
-          <div id="fianca-breakdown" class="fianca-breakdown hidden">
-            <div class="breakdown-row"><span><i class="fa-solid fa-user-shield"></i> Policial (35%):</span><span id="valor-policial">R$ 0</span></div>
-            <div class="breakdown-row"><span><i class="fa-solid fa-desktop"></i> Painel (35%):</span><span id="valor-painel">R$ 0</span></div>
-            <div class="breakdown-row"><span><i class="fa-solid fa-user-tie"></i> Advogado (30%):</span><span id="valor-advogado">R$ 0</span></div>
+        <div id="container-radio-fianca" class="calculated-row-radio" style="background-color: rgba(16, 185, 129, 0.1); border-radius: 4px; padding: 10px;">
+          <label style="color: #fff; font-weight: bold;">Simulação de Fiança?</label>
+          <div class="radio-group">
+            <input type="radio" id="fianca-nao" name="pagou-fianca" value="nao" checked>
+            <label for="fianca-nao" class="radio-label">Não</label>
+            <input type="radio" id="fianca-sim" name="pagou-fianca" value="sim">
+            <label for="fianca-sim" class="radio-label">Sim</label>
           </div>
         </div>
 
-        <hr>
-
-        <div class="resumo-section itens-apreendidos">
-          <div class="section-title"><i class="fa-solid fa-box"></i> ITENS APREENDIDOS:</div>
-          <textarea placeholder="Liste os itens..."></textarea>
+        <div class="calculated-row">
+          <label>Valor da Fiança Estimada</label>
+          <input type="text" value="R$ 0" id="fianca-output" readonly>
         </div>
 
-        <div id="container-dinheiro-sujo" class="resumo-section dinheiro-sujo hidden">
-          <div class="section-title"><i class="fa-solid fa-money-bill-transfer"></i> DINHEIRO SUJO:</div>
-          <input type="text" id="input-dinheiro-sujo" placeholder="Digite o valor (ex: 100.000)">
+        <div id="fianca-breakdown" class="fianca-breakdown hidden">
+          <div class="breakdown-row"><span><i class="fa-solid fa-user-shield"></i> Policial (35%):</span><span id="valor-policial">R$ 0</span></div>
+          <div class="breakdown-row"><span><i class="fa-solid fa-desktop"></i> Painel (35%):</span><span id="valor-painel">R$ 0</span></div>
+          <div class="breakdown-row"><span><i class="fa-solid fa-user-tie"></i> Advogado (30%):</span><span id="valor-advogado">R$ 0</span></div>
         </div>
+      </div>
 
-        <div class="action-buttons">
-          <button id="btn-enviar" class="btn-action"><i class="fa-solid fa-calculator"></i> CALCULAR / REGISTRAR</button>
-          <button id="btn-limpar" class="btn-action btn-limpar"><i class="fa-solid fa-eraser"></i> LIMPAR TUDO</button>
-        </div>
+      <hr>
 
-      </section>
-    </main>
+      <div class="resumo-section itens-apreendidos">
+        <div class="section-title"><i class="fa-solid fa-box"></i> ITENS APREENDIDOS:</div>
+        <textarea placeholder="Liste os itens..."></textarea>
+      </div>
+
+      <div id="container-dinheiro-sujo" class="resumo-section dinheiro-sujo hidden">
+        <div class="section-title"><i class="fa-solid fa-money-bill-transfer"></i> DINHEIRO SUJO:</div>
+        <input type="text" id="input-dinheiro-sujo" placeholder="Digite o valor (ex: 100.000)">
+      </div>
+
+      <div class="action-buttons">
+        <button id="btn-enviar" class="btn-action"><i class="fa-solid fa-calculator"></i> CALCULAR / REGISTRAR</button>
+        <button id="btn-limpar" class="btn-action btn-limpar"><i class="fa-solid fa-eraser"></i> LIMPAR TUDO</button>
+      </div>
+
+    </section>
+  </main>
   </div>
   <script src="script.js"></script>
 </body>
