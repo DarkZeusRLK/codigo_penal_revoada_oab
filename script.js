@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // CONFIGURAÇÕES GERAIS
+  // ELEMENTOS DA INTERFACE
   const userNameSpan = document.getElementById("user-name");
   const penaTotalEl = document.getElementById("pena-total");
   const multaTotalEl = document.getElementById("multa-total");
@@ -7,42 +7,57 @@ document.addEventListener("DOMContentLoaded", function () {
   const inputDinheiroSujo = document.getElementById("input-dinheiro-sujo");
   const alertaPenaMaxima = document.getElementById("alerta-pena-maxima");
 
+  // ATENUANTES
+  const checkAdvogado = document.getElementById("atenuante-advogado");
+  const checkPrimario = document.getElementById("atenuante-primario");
+  const checkConfesso = document.getElementById("atenuante-confesso");
+
   let selectedCrimes = [];
 
   function mostrarAlerta(msg) {
     alert(msg);
   }
 
-  // ATUALIZA TOTAIS COM LIMITADOR DE 180 MESES
+  // ATUALIZA TOTAIS COM LÓGICA DE ATENUANTES E LIMITADOR
   function atualizarTotais() {
-    let pena = 0;
+    let penaBruta = 0;
     let multa = 0;
     let temInafiancavel = selectedCrimes.some((c) => c.infiancavel === true);
 
     selectedCrimes.forEach((c) => {
-      pena += c.pena || 0;
+      penaBruta += c.pena || 0;
       multa += c.multa || 0;
     });
 
-    // DINHEIRO SUJO
-    if (inputDinheiroSujo && inputDinheiroSujo.value) {
-      let valorSujo = parseInt(inputDinheiroSujo.value.replace(/\D/g, "")) || 0;
-      multa += valorSujo;
-    }
+    // 1. APLICAR TRAVA DE 180 MESES NA PENA BRUTA
+    let penaBase = Math.min(penaBruta, 180);
 
-    // TRAVA DE PENA MÁXIMA (180 MESES)
-    if (pena > 180) {
-      pena = 180;
+    if (penaBruta > 180) {
       alertaPenaMaxima?.classList.remove("hidden");
     } else {
       alertaPenaMaxima?.classList.add("hidden");
     }
 
+    // 2. CALCULAR PORCENTAGEM DE REDUÇÃO (CUMULATIVA)
+    // Advogado constituído é fixo (-20%)
+    let reducao = 20;
+    if (checkPrimario && checkPrimario.checked) reducao += 10;
+    if (checkConfesso && checkConfesso.checked) reducao += 10;
+
+    // 3. CALCULAR PENA FINAL
+    let penaFinal = Math.floor(penaBase * (1 - reducao / 100));
+
+    // DINHEIRO SUJO (SOMA NA MULTA)
+    if (inputDinheiroSujo && inputDinheiroSujo.value) {
+      let valorSujo = parseInt(inputDinheiroSujo.value.replace(/\D/g, "")) || 0;
+      multa += valorSujo;
+    }
+
     // FIANÇA: 3x a multa ou 0 se inafiançável
     const fianca = temInafiancavel ? 0 : multa * 3;
 
-    // Atualização do HTML
-    if (penaTotalEl) penaTotalEl.textContent = pena + " meses";
+    // ATUALIZAR HTML
+    if (penaTotalEl) penaTotalEl.textContent = penaFinal + " meses";
     if (multaTotalEl)
       multaTotalEl.textContent = "R$ " + multa.toLocaleString("pt-BR");
     if (fiancaOutput) {
@@ -53,11 +68,23 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // OUVINTES PARA OS CHECKBOXES DE ATENUANTES
+  [checkPrimario, checkConfesso].forEach((el) => {
+    el?.addEventListener("change", atualizarTotais);
+  });
+
+  if (inputDinheiroSujo) {
+    inputDinheiroSujo.addEventListener("input", atualizarTotais);
+  }
+
   // SELEÇÃO DE CRIMES
   document.querySelectorAll(".crime-item").forEach((item) => {
     item.addEventListener("click", () => {
       const artigo = item.dataset.artigo;
-      const nome = item.querySelector(".crime-name").textContent;
+      const nome = item
+        .querySelector(".crime-name")
+        .textContent.replace(/\*\*/g, "")
+        .trim();
       const pena = parseInt(item.dataset.pena) || 0;
       const multa = parseInt(item.dataset.multa) || 0;
       const infiancavel = item.dataset.infiancavel === "true";
@@ -75,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // BOTÃO COPIAR RELATÓRIO (MD COM BLOCO DE CÓDIGO)
+  // BOTÃO COPIAR RELATÓRIO (FORMATO MD DISCORD)
   const btnEnviar = document.getElementById("btn-enviar");
   if (btnEnviar) {
     btnEnviar.addEventListener("click", () => {
@@ -86,35 +113,35 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("advogado")?.value.trim() || "N/I";
 
       if (selectedCrimes.length === 0)
-        return mostrarAlerta("Selecione os crimes!");
+        return mostrarAlerta("Selecione os crimes antes de copiar!");
 
       const crimesMD = selectedCrimes
-        .map((c) => `• Art. ${c.artigo}: ${c.nome}`)
+        .map((c) => `• Art. ${c.artigo} - ${c.nome}`)
         .join("\n");
 
-      // Formatação Markdown com Bloco de Código (```md) para fundo preto no Discord
+      // BLOCO DE CÓDIGO MD PARA FUNDO PRETO NO DISCORD
       const markdown =
         "```md\n" +
-        `# RELATÓRIO DE DETENÇÃO - ADVOCACIA
+        `# RELATÓRIO DE PRISÃO - ADVOCACIA
 
-[DADOS DO CIDADÃO]
-NOME: ${nomePreso}
-ID/RG: ${rgPreso}
-ADVOGADO RESPONSÁVEL: ${advogado}
+[IDENTIFICAÇÃO]
+CIDADÃO: ${nomePreso}
+RG/ID: ${rgPreso}
+ADVOGADO: ${advogado}
 
-[CRIMES APLICADOS]
+[CRIMES]
 ${crimesMD}
 
-[RESUMO DA SENTENÇA]
-PENA FINAL: ${penaTotalEl.textContent}
-MULTA TOTAL: ${multaTotalEl.textContent}
-VALOR DA FIANÇA: ${fiancaOutput.value}
+[SENTENÇA FINAL]
+PENA: ${penaTotalEl.textContent}
+MULTA: ${multaTotalEl.textContent}
+FIANÇA: ${fiancaOutput.value}
 
-Gerado via Calculadora Penal - Advocacia` +
+Gerado por: ${userNameSpan?.value || "Sistema"}` +
         "\n```";
 
       navigator.clipboard.writeText(markdown).then(() => {
-        alert("Relatório copiado com sucesso!");
+        alert("Relatório copiado para o Discord!");
       });
     });
   }
@@ -127,7 +154,10 @@ Gerado via Calculadora Penal - Advocacia` +
       .forEach((i) => i.classList.remove("selected"));
     document.getElementById("nome").value = "";
     document.getElementById("rg").value = "";
+    document.getElementById("advogado").value = "";
     if (inputDinheiroSujo) inputDinheiroSujo.value = "";
+    if (checkPrimario) checkPrimario.checked = false;
+    if (checkConfesso) checkConfesso.checked = false;
     atualizarTotais();
   });
 });
