@@ -64,40 +64,6 @@
           <label for="advogado">OAB / RG do Advogado:</label>
           <input type="text" id="advogado" placeholder="Identificação do advogado">
         </div>
-
-        <div class="participantes-section">
-          <label><i class="fa-solid fa-users"></i> Oficiais Envolvidos (Opcional):</label>
-          <div class="participante-selector-row search-container">
-            <input type="text" id="search-oficial" class="form-search" placeholder="Nome do Oficial..." autocomplete="off">
-            <div id="dropdown-oficiais" class="dropdown-results hidden"></div>
-            <input type="hidden" id="selected-oficial-id">
-
-            <button id="btn-add-participante" class="btn-small"><i class="fa-solid fa-plus"></i></button>
-          </div>
-          <div id="lista-participantes-visual" class="tags-container"></div>
-        </div>
-      </div>
-
-      <div class="upload-section">
-        <div class="upload-box" id="box-upload-mochila" tabindex="0">
-          <label>🎒 Foto Inventário (Opcional)</label>
-          <p class="paste-hint"><i class="fa-regular fa-clipboard"></i> Clique aqui e aperte Ctrl+V</p>
-          <div class="preview-area" id="preview-box-mochila">
-            <i class="fa-solid fa-suitcase placeholder-icon"></i>
-            <img id="img-preview-mochila" class="hidden" src="">
-          </div>
-          <input type="file" id="upload-mochila" accept="image/*">
-        </div>
-
-        <div class="upload-box hidden" id="box-upload-deposito" tabindex="0" style="border-color: var(--color-success);">
-          <label style="color: var(--color-success);">💸 Comprovante Depósito</label>
-          <p class="paste-hint"><i class="fa-regular fa-clipboard"></i> Clique aqui e aperte Ctrl+V</p>
-          <div class="preview-area" id="preview-box-deposito">
-            <i class="fa-solid fa-receipt placeholder-icon" style="color: var(--color-success);"></i>
-            <img id="img-preview-deposito" class="hidden" src="">
-          </div>
-          <input type="file" id="upload-deposito" accept="image/*">
-        </div>
       </div>
     </section>
 
