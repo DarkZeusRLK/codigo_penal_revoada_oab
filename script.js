@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // CONFIGURAÇÕES GERAIS - IDs corrigidos para bater com o index.html
   const userNameSpan = document.getElementById("user-name");
   const penaTotalEl = document.getElementById("pena-total");
   const multaTotalEl = document.getElementById("multa-total");
-  const fiancaTotalEl = document.getElementById("fianca-total");
-  const inputDinheiroSujo = document.getElementById("dinheiro-sujo");
+  const fiancaTotalEl = document.getElementById("fianca-output"); // ID correto do HTML
+  const inputDinheiroSujo = document.getElementById("input-dinheiro-sujo"); // ID correto do HTML
 
   let selectedCrimes = [];
 
@@ -11,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
     alert(msg);
   }
 
+  // ATUALIZA TOTAIS (PENA / MULTA / FIANÇA)
   function atualizarTotais() {
     let pena = 0;
     let multa = 0;
@@ -20,30 +22,34 @@ document.addEventListener("DOMContentLoaded", function () {
       multa += c.multa || 0;
     });
 
+    // Dinheiro sujo soma na multa
     if (inputDinheiroSujo && inputDinheiroSujo.value) {
-      multa += parseInt(inputDinheiroSujo.value.replace(/\./g, "")) || 0;
+      let valorSujo = parseInt(inputDinheiroSujo.value.replace(/\D/g, "")) || 0;
+      multa += valorSujo;
     }
 
+    // CÁLCULO DE FIANÇA: 3x o valor da multa
     const fianca = multa * 3;
 
     if (penaTotalEl) penaTotalEl.textContent = pena + " meses";
     if (multaTotalEl)
       multaTotalEl.textContent = "R$ " + multa.toLocaleString("pt-BR");
     if (fiancaTotalEl)
-      fiancaTotalEl.textContent = "R$ " + fianca.toLocaleString("pt-BR");
+      fiancaTotalEl.value = "R$ " + fianca.toLocaleString("pt-BR");
   }
 
   // SELEÇÃO DE CRIMES
   document.querySelectorAll(".crime-item").forEach((item) => {
     item.addEventListener("click", () => {
       const artigo = item.dataset.artigo;
-      // Busca o nome dentro do span se o dataset estiver vazio
+      // Busca o nome dentro do span porque o dataset-nome não existe no HTML
       const nome =
-        item.querySelector(".crime-name")?.textContent || "Crime s/ nome";
+        item.querySelector(".crime-name").innerText.split(" - ")[1] || "Crime";
       const pena = parseInt(item.dataset.pena) || 0;
       const multa = parseInt(item.dataset.multa) || 0;
 
       const index = selectedCrimes.findIndex((c) => c.artigo === artigo);
+
       if (index >= 0) {
         selectedCrimes.splice(index, 1);
         item.classList.remove("selected");
@@ -51,47 +57,43 @@ document.addEventListener("DOMContentLoaded", function () {
         selectedCrimes.push({ artigo, nome, pena, multa });
         item.classList.add("selected");
       }
+
       atualizarTotais();
     });
   });
 
-  // BOTÃO COPIAR RELATÓRIO (MARKDOWN DISCORD)
+  // BOTÃO COPIAR RELATÓRIO (MD DISCORD)
   const btnEnviar = document.getElementById("btn-enviar");
   if (btnEnviar) {
     btnEnviar.addEventListener("click", () => {
-      const nomePreso =
-        document.getElementById("nome")?.value.trim() || "NÃO INFORMADO";
-      const rgPreso =
-        document.getElementById("rg")?.value.trim() || "NÃO INFORMADO";
-      const advogado =
-        document.getElementById("advogado")?.value.trim() || "NÃO INFORMADO";
+      const nomePreso = document.getElementById("nome")?.value.trim();
+      const rgPreso = document.getElementById("rg")?.value.trim() || "N/I";
 
-      if (selectedCrimes.length === 0) {
-        return mostrarAlerta("Selecione pelo menos um crime.", "error");
+      if (!nomePreso) {
+        return mostrarAlerta("Preencha o nome do preso.", "error");
       }
 
-      let crimesTexto = selectedCrimes
-        .map((c) => `- ${c.nome} (Art. ${c.artigo})`)
+      if (selectedCrimes.length === 0) {
+        return mostrarAlerta("Selecione ao menos um crime.", "error");
+      }
+
+      const crimesMD = selectedCrimes
+        .map((c) => `- Art. ${c.artigo}: ${c.nome}`)
         .join("\n");
 
-      const penaFinal = penaTotalEl.textContent;
-      const multaFinal = multaTotalEl.textContent;
-      const fiancaFinal = fiancaTotalEl.textContent;
-
       const markdown = `
-**📑 RELATÓRIO DE DETENÇÃO**
+**📋 RELATÓRIO DE PRISÃO**
 
-**👤 NOME DO PRESO:** ${nomePreso}
+**👤 Preso:** ${nomePreso}
 **🆔 ID/RG:** ${rgPreso}
-**⚖️ ADVOGADO/OAB:** ${advogado}
 
-**🚨 CRIMES COMETIDOS:**
-${crimesTexto}
+**⚖️ CRIMES:**
+${crimesMD}
 
-**📊 PENALIDADE:**
-- **Pena Total:** ${penaFinal}
-- **Multa:** ${multaFinal}
-- **Fiança Sugerida:** ${fiancaFinal}
+**📊 PENALIDADES:**
+- **Pena:** ${penaTotalEl.textContent}
+- **Multa:** ${multaTotalEl.textContent}
+- **Fiança (3x):** ${fiancaTotalEl.value}
 
 _Gerado por: ${userNameSpan?.value || "Sistema de Advocacia"}_
 `.trim();
@@ -101,19 +103,9 @@ _Gerado por: ${userNameSpan?.value || "Sistema de Advocacia"}_
   }
 
   function copiarTexto(texto) {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(texto).then(() => {
-        mostrarAlerta("Relatório copiado para o Discord!", "success");
-      });
-    } else {
-      const ta = document.createElement("textarea");
-      ta.value = texto;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand("copy");
-      document.body.removeChild(ta);
-      mostrarAlerta("Relatório copiado!", "success");
-    }
+    navigator.clipboard.writeText(texto).then(() => {
+      mostrarAlerta("Relatório copiado para o Discord!", "success");
+    });
   }
 
   // LIMPAR TUDO
@@ -126,7 +118,7 @@ _Gerado por: ${userNameSpan?.value || "Sistema de Advocacia"}_
         .forEach((i) => i.classList.remove("selected"));
       document.getElementById("nome").value = "";
       document.getElementById("rg").value = "";
-      document.getElementById("advogado").value = "";
+      if (inputDinheiroSujo) inputDinheiroSujo.value = "";
       atualizarTotais();
     });
   }
