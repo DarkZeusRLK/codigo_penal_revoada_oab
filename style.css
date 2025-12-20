@@ -1112,3 +1112,53 @@ input[type="radio"] {
   font-weight: bold;
   color: var(--color-success);
 }
+/* Estilização da Seção de Fiança */
+.fianca-breakdown {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 15px;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fianca-breakdown.hidden {
+  display: none;
+}
+
+.breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.breakdown-row:last-child {
+  border-bottom: none;
+}
+
+.breakdown-row span:first-child {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.breakdown-row span i {
+  color: var(--gold-accent);
+  width: 16px;
+}
+
+.breakdown-row span:last-child {
+  color: var(--green-accent);
+  font-weight: bold;
+  font-family: "monospace";
+}
+
+#total-fianca {
+  transition: color 0.3s ease;
+}

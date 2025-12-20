@@ -345,19 +345,17 @@
 
       <div class="resumo-section itens-apreendidos">
         <div class="section-title"><i class="fa-solid fa-box"></i> ITENS APREENDIDOS:</div>
-        <textarea placeholder="Liste os itens..."></textarea>
-      </div>
-
-      <div id="container-dinheiro-sujo" class="resumo-section dinheiro-sujo hidden">
-        <div class="section-title"><i class="fa-solid fa-money-bill-transfer"></i> DINHEIRO SUJO:</div>
-        <input type="text" id="input-dinheiro-sujo" placeholder="Digite o valor (ex: 100.000)">
+        <textarea id="input-itens" placeholder="Liste os itens..."></textarea>
       </div>
 
       <div class="action-buttons">
-        <button id="btn-enviar" class="btn-action"><i class="fa-solid fa-copy"></i> COPIAR RELATÓRIO</button>
-        <button id="btn-limpar" class="btn-action btn-limpar"><i class="fa-solid fa-eraser"></i> LIMPAR TUDO</button>
+        <button id="btn-copiar-relatorio" class="btn-confirm">
+          <i class="fa-solid fa-copy"></i> COPIAR RELATÓRIO (MD)
+        </button>
+        <button onclick="location.reload()" class="btn-cancel">
+          <i class="fa-solid fa-trash"></i> LIMPAR
+        </button>
       </div>
-
 
     </section>
   </main>
