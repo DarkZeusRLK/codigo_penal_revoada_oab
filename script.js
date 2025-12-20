@@ -2,24 +2,23 @@ document.addEventListener("DOMContentLoaded", function () {
   // =========================================================
   // CONFIGURAÇÕES GERAIS
   // =========================================================
-  const VERSAO_ATUAL = "2.4.0";
-
   const userNameSpan = document.getElementById("user-name");
   const penaTotalEl = document.getElementById("pena-total");
   const multaTotalEl = document.getElementById("multa-total");
+  const fiancaTotalEl = document.getElementById("fianca-total");
   const inputDinheiroSujo = document.getElementById("dinheiro-sujo");
 
   let selectedCrimes = [];
 
   // =========================================================
-  // ALERTAS
+  // ALERTAS (SIMPLIFICADO)
   // =========================================================
   function mostrarAlerta(msg, tipo = "info") {
     alert(msg);
   }
 
   // =========================================================
-  // ATUALIZA TOTAIS
+  // ATUALIZA TOTAIS (PENA / MULTA / FIANÇA)
   // =========================================================
   function atualizarTotais() {
     let pena = 0;
@@ -30,17 +29,22 @@ document.addEventListener("DOMContentLoaded", function () {
       multa += c.multa || 0;
     });
 
+    // Dinheiro sujo soma na multa
     if (inputDinheiroSujo && inputDinheiroSujo.value) {
       multa += parseInt(inputDinheiroSujo.value) || 0;
     }
 
+    const fianca = multa * 3;
+
     if (penaTotalEl) penaTotalEl.textContent = pena + " meses";
     if (multaTotalEl)
       multaTotalEl.textContent = "R$ " + multa.toLocaleString("pt-BR");
+    if (fiancaTotalEl)
+      fiancaTotalEl.textContent = "R$ " + fianca.toLocaleString("pt-BR");
   }
 
   // =========================================================
-  // SELEÇÃO DE CRIMES
+  // SELEÇÃO DE CRIMES + TRAVAS
   // =========================================================
   document.querySelectorAll(".crime-item").forEach((item) => {
     item.addEventListener("click", () => {
@@ -51,15 +55,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // ================= TRAVAS =================
       if (artigo === "124" && selectedCrimes.some((c) => c.artigo === "125")) {
-        return mostrarAlerta("Conflito: Porte não pode com Tráfico.", "error");
+        return mostrarAlerta(
+          "Conflito: Porte não pode junto com Tráfico.",
+          "error"
+        );
       }
 
       if (artigo === "125" && selectedCrimes.some((c) => c.artigo === "124")) {
-        return mostrarAlerta("Conflito: Tráfico não pode com Porte.", "error");
+        return mostrarAlerta(
+          "Conflito: Tráfico não pode junto com Porte.",
+          "error"
+        );
       }
 
       if (artigo === "161" && selectedCrimes.some((c) => c.artigo === "162")) {
-        return mostrarAlerta("Conflito: Reincidente x Primário.", "error");
+        return mostrarAlerta("Conflito: Réu Primário x Reincidente.", "error");
       }
 
       // ================= SELEÇÃO =================
@@ -78,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // =========================================================
-  // BOTÃO COPIAR RELATÓRIO (SUBSTITUI CALCULAR / REGISTRAR)
+  // BOTÃO COPIAR RELATÓRIO (MD DISCORD)
   // =========================================================
   const btnEnviar = document.getElementById("btn-enviar");
 
@@ -97,18 +107,29 @@ document.addEventListener("DOMContentLoaded", function () {
         return mostrarAlerta("Selecione ao menos um crime.", "error");
       }
 
-      const dinheiroSujoMarcado = selectedCrimes.some(
-        (c) => c.artigo === "138"
-      );
+      // Trava Dinheiro Sujo
+      const temDinheiroSujo = selectedCrimes.some((c) => c.artigo === "138");
       if (
-        dinheiroSujoMarcado &&
+        temDinheiroSujo &&
         (!inputDinheiroSujo.value || inputDinheiroSujo.value.trim() === "")
       ) {
         return mostrarAlerta("Informe o valor do Dinheiro Sujo.", "error");
       }
 
+      // Recalcula para garantir valores corretos
+      atualizarTotais();
+
+      const multaTexto = multaTotalEl?.textContent || "N/D";
+      const fiancaTexto = fiancaTotalEl?.textContent || "N/D";
+
       const crimesMD = selectedCrimes
-        .map((c) => `- Art. ${c.artigo} — ${c.nome.replace(/\*\*/g, "")}`)
+        .map((c) => {
+          const nomeCrime = (c.nome || "Crime sem descrição").replace(
+            /\*\*/g,
+            ""
+          );
+          return `- Art. ${c.artigo} — ${nomeCrime}`;
+        })
         .join("\n");
 
       const markdown = `
@@ -121,28 +142,37 @@ document.addEventListener("DOMContentLoaded", function () {
 ${crimesMD}
 
 **⏳ Pena Total:** ${penaTotalEl?.textContent || "N/D"}  
-**💰 Multa Total:** ${multaTotalEl?.textContent || "N/D"}
+**💰 Multa Total:** ${multaTexto}  
+**🏦 Fiança (3x multa):** ${fiancaTexto}
 
 _Gerado por ${userNameSpan?.textContent || "Sistema"}_
 `.trim();
 
-      // COPIAR
-      if (navigator.clipboard) {
-        navigator.clipboard
-          .writeText(markdown)
-          .then(() => {
-            mostrarAlerta("Relatório copiado em Markdown!", "success");
-          })
-          .catch(() => fallbackCopy(markdown));
-      } else {
-        fallbackCopy(markdown);
-      }
+      copiarTexto(markdown);
     });
+  }
+
+  // =========================================================
+  // FUNÇÃO DE CÓPIA
+  // =========================================================
+  function copiarTexto(texto) {
+    if (navigator.clipboard) {
+      navigator.clipboard
+        .writeText(texto)
+        .then(() => {
+          mostrarAlerta("Relatório copiado em Markdown!", "success");
+        })
+        .catch(() => fallbackCopy(texto));
+    } else {
+      fallbackCopy(texto);
+    }
   }
 
   function fallbackCopy(text) {
     const ta = document.createElement("textarea");
     ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.left = "-9999px";
     document.body.appendChild(ta);
     ta.select();
     document.execCommand("copy");
