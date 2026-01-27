@@ -127,7 +127,8 @@
       multaTotal += Math.round(valorSujo / 2);
     }
 
-    const fianca = temInafiancavel ? 0 : multaTotal * 3;
+    const fiancaBruta = temInafiancavel ? 0 : multaTotal * 3;
+    const fianca = Math.min(fiancaBruta, 2500000);
 
     if (penaTotalEl) penaTotalEl.textContent = penaFinal + " meses";
     if (multaTotalEl) multaTotalEl.textContent = formatCurrency(multaTotal);
