@@ -196,6 +196,38 @@
     });
   }
 
+  const btnEnviar = document.getElementById("btn-enviar");
+  if (btnEnviar) {
+    btnEnviar.addEventListener("click", () => {
+      const nomePreso =
+        document.getElementById("nome")?.value.trim() || "NÃO INFORMADO";
+      const rgPreso = document.getElementById("rg")?.value.trim() || "N/I";
+      const advogado =
+        document.getElementById("advogado")?.value.trim() || "N/I";
+
+      if (selectedCrimes.length === 0) {
+        return showAlert("Selecione os crimes antes de copiar!");
+      }
+
+      const crimesMD = selectedCrimes
+        .map((c) => `• Art. ${c.artigo} - ${c.nome}`)
+        .join("\n");
+
+      const markdown =
+        "```md\n" +
+        `# RELATÓRIO DE PRISÃO - ADVOCACIA\n\n[IDENTIFICAÇÃO]\nCIDADÃO: ${nomePreso}\nRG/ID: ${rgPreso}\nADVOGADO: ${advogado}\n\n[CRIMES]\n${crimesMD}\n\n[SENTENÇA FINAL]\nPENA: ${
+          penaTotalEl.textContent
+        }\nMULTA: ${multaTotalEl.textContent}\nFIANÇA: ${
+          fiancaOutput.value
+        }\n` +
+        "\n```";
+
+      navigator.clipboard.writeText(markdown).then(() => {
+        alert("Relatório copiado para o Discord!");
+      });
+    });
+  }
+
   document.getElementById("btn-limpar")?.addEventListener("click", () => {
     selectedCrimes = [];
     crimeItems.forEach((i) => i.classList.remove("selected"));
