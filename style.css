@@ -1148,3 +1148,283 @@ input[type="radio"] {
   text-align: center;
   background: rgba(0, 0, 0, 0.2);
 }
+
+/* =========================================
+   11. ELEMENTOS DO CARNAVAL E MODAIS
+   ========================================= */
+.fireworks-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.corner-masks {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.corner-mask {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border: 2px solid rgba(255, 255, 255, 0.08);
+}
+
+.corner-top-left {
+  top: 10px;
+  left: 10px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.corner-top-right {
+  top: 10px;
+  right: 10px;
+  border-left: none;
+  border-bottom: none;
+}
+
+.corner-bottom-left {
+  bottom: 10px;
+  left: 10px;
+  border-right: none;
+  border-top: none;
+}
+
+.corner-bottom-right {
+  bottom: 10px;
+  right: 10px;
+  border-left: none;
+  border-top: none;
+}
+
+.alert-inafiancavel {
+  position: fixed;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(211, 47, 47, 0.15);
+  border: 1px solid var(--color-danger);
+  color: var(--text-primary);
+  padding: 10px 16px;
+  border-radius: 6px;
+  z-index: 9999;
+  font-weight: 600;
+  font-size: 0.9em;
+}
+
+.carnaval-masks {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.carnaval-mask {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffd166 0%, #ef476f 100%);
+  opacity: 0.8;
+}
+
+.logo-mask {
+  margin-left: -10px;
+  margin-right: 6px;
+}
+
+/* Spotify player */
+.spotify-player-container {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(19, 27, 38, 0.95);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 12px;
+  z-index: 1000;
+  width: 280px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+.spotify-content {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.spotify-img-wrapper img {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.spotify-track-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.track-title {
+  font-weight: 700;
+}
+
+.track-artist {
+  color: var(--text-secondary);
+  font-size: 0.85em;
+}
+
+.spotify-controls {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.control-btn {
+  background: var(--bg-header-category);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.control-btn.play-btn-main {
+  background: var(--color-revoada);
+}
+
+.btn-minimize {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.btn-restore {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: #1db954;
+  color: #fff;
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+/* Modais e dicas */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal-content,
+.modal-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  width: 92%;
+  max-width: 700px;
+  max-height: 85vh;
+  overflow: hidden;
+}
+
+.modal-header,
+.modal-footer {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.modal-footer {
+  border-top: 1px solid var(--border-color);
+  border-bottom: none;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-body {
+  padding: 16px 20px;
+  overflow-y: auto;
+}
+
+.btn-primary,
+.btn-cancelar,
+.btn-confirmar {
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.btn-primary {
+  background: var(--color-revoada);
+  color: #fff;
+}
+
+.btn-cancelar {
+  background: var(--bg-header-category);
+  color: var(--text-primary);
+}
+
+.btn-confirmar {
+  background: var(--color-success);
+  color: #fff;
+}
+
+.dica-box {
+  position: fixed;
+  right: 20px;
+  bottom: 90px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px 14px;
+  width: 260px;
+  z-index: 1200;
+}
+
+.dica-close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.dica-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.dica-reopen {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  background: var(--color-revoada);
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  z-index: 1200;
+}
