@@ -99,7 +99,7 @@
     fiancaBreakdown?.classList.toggle("hidden", !mostrarFiancaBreakdown);
     boxUploadDeposito?.classList.toggle("hidden", !mostrarDeposito);
 
-    if (mostrarFianca) {
+    if (mostrarFiancaBreakdown) {
       const painel = Math.round(fianca * 0.4);
       const policial = Math.round(fianca * 0.3);
       const advogado = fianca - painel - policial;
