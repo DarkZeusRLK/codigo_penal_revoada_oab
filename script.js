@@ -143,10 +143,10 @@
 
     updateFiancaUI(fianca, temInafiancavel);
     alertaInafiancavel?.classList.toggle("hidden", !temInafiancavel);
-    atualizarDetalhes(temInafiancavel);
+    atualizarDetalhes(temInafiancavel, fianca);
   }
 
-  function atualizarDetalhes(temInafiancavel) {
+  function atualizarDetalhes(temInafiancavel, fianca) {
     if (!detalhesOutput) return;
 
     const reuReincidente = selectedCrimes.some((c) => c.artigo === "163");
@@ -171,6 +171,17 @@
         value: reanimadoHp ? `Sim (${minutosHp} min)` : "Não",
       },
     ];
+
+    if (!temInafiancavel && fianca > 0) {
+      const painel = Math.round(fianca * 0.4);
+      const policial = Math.round(fianca * 0.3);
+      const advogado = fianca - painel - policial;
+      detalhes.push(
+        { label: "Fiança painel (40%)", value: formatCurrency(painel) },
+        { label: "Fiança policial (30%)", value: formatCurrency(policial) },
+        { label: "Fiança advogado (30%)", value: formatCurrency(advogado) }
+      );
+    }
 
     detalhesOutput.innerHTML = "";
     detalhes.forEach((item) => {
