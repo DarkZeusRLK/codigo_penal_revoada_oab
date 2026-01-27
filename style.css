@@ -1428,3 +1428,30 @@ input[type="radio"] {
   cursor: pointer;
   z-index: 1200;
 }
+
+.detalhes-pena {
+  margin-top: 15px;
+}
+
+.detalhes-output {
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.2);
+  display: grid;
+  gap: 6px;
+  font-size: 0.9em;
+}
+
+.detalhes-output li {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-secondary);
+}
+
+.detalhes-output span {
+  color: var(--text-primary);
+  font-weight: 600;
+}

@@ -7,11 +7,16 @@
   const alertaPenaMaxima = document.getElementById("alerta-pena-maxima");
   const alertaInafiancavel = document.getElementById("alerta-inafiancavel");
   const crimesListOutput = document.getElementById("crimes-list-output");
+  const detalhesOutput = document.getElementById("detalhes-output");
   const fiancaBreakdown = document.getElementById("fianca-breakdown");
   const valorPainel = document.getElementById("valor-painel");
   const valorPolicial = document.getElementById("valor-policial");
   const valorAdvogado = document.getElementById("valor-advogado");
   const boxUploadDeposito = document.getElementById("box-upload-deposito");
+  const hpSim = document.getElementById("hp-sim");
+  const hpNao = document.getElementById("hp-nao");
+  const hpMinutos = document.getElementById("hp-minutos");
+  const containerHpMinutos = document.getElementById("container-hp-minutos");
 
   const checkAdvogado = document.getElementById("atenuante-advogado");
   const checkPrimario = document.getElementById("atenuante-primario");
@@ -87,9 +92,12 @@
       fiancaOutput.style.color = "#2e7d32";
     }
 
-    const mostrarFianca = !temInafiancavel && fianca > 0 && fiancaSim?.checked;
-    fiancaBreakdown?.classList.toggle("hidden", !mostrarFianca);
-    boxUploadDeposito?.classList.toggle("hidden", !mostrarFianca);
+    const mostrarFiancaBreakdown =
+      !temInafiancavel && fianca > 0 && (fiancaSim?.checked || checkAdvogado?.checked);
+    const mostrarDeposito =
+      !temInafiancavel && fianca > 0 && fiancaSim?.checked;
+    fiancaBreakdown?.classList.toggle("hidden", !mostrarFiancaBreakdown);
+    boxUploadDeposito?.classList.toggle("hidden", !mostrarDeposito);
 
     if (mostrarFianca) {
       const painel = Math.round(fianca * 0.4);
@@ -135,6 +143,41 @@
 
     updateFiancaUI(fianca, temInafiancavel);
     alertaInafiancavel?.classList.toggle("hidden", !temInafiancavel);
+    atualizarDetalhes(temInafiancavel);
+  }
+
+  function atualizarDetalhes(temInafiancavel) {
+    if (!detalhesOutput) return;
+
+    const reuReincidente = selectedCrimes.some((c) => c.artigo === "163");
+    const reuPrimario = !!checkPrimario?.checked;
+    const advogadoConstituido = !!checkAdvogado?.checked;
+    const pagamentoFianca = !!fiancaSim?.checked;
+    const reanimadoHp = !!hpSim?.checked;
+    const minutosHp = reanimadoHp
+      ? parseInt(hpMinutos?.value || "0", 10) || 0
+      : 0;
+
+    const detalhes = [
+      { label: "Réu primário", value: reuPrimario ? "Sim" : "Não" },
+      { label: "Réu reincidente", value: reuReincidente ? "Sim" : "Não" },
+      { label: "Advogado constituído", value: advogadoConstituido ? "Sim" : "Não" },
+      {
+        label: "Pagamento de fiança",
+        value: temInafiancavel ? "Inafiançável" : pagamentoFianca ? "Sim" : "Não",
+      },
+      {
+        label: "Reanimado no HP",
+        value: reanimadoHp ? `Sim (${minutosHp} min)` : "Não",
+      },
+    ];
+
+    detalhesOutput.innerHTML = "";
+    detalhes.forEach((item) => {
+      const li = document.createElement("li");
+      li.innerHTML = `${item.label}: <span>${item.value}</span>`;
+      detalhesOutput.appendChild(li);
+    });
   }
 
   function toggleCrime(artigo, fromRemoveButton) {
@@ -181,6 +224,17 @@
     (el) => el?.addEventListener("change", atualizarTotais)
   );
 
+  [hpSim, hpNao].forEach((el) =>
+    el?.addEventListener("change", () => {
+      const mostrar = hpSim?.checked;
+      containerHpMinutos?.classList.toggle("hidden", !mostrar);
+      if (!mostrar && hpMinutos) hpMinutos.value = "";
+      atualizarTotais();
+    })
+  );
+
+  hpMinutos?.addEventListener("input", atualizarTotais);
+
   if (inputDinheiroSujo) {
     inputDinheiroSujo.addEventListener("input", (e) => {
       const el = e.target;
@@ -213,13 +267,32 @@
         .map((c) => `• Art. ${c.artigo} - ${c.nome}`)
         .join("\n");
 
+      const reuReincidente = selectedCrimes.some((c) => c.artigo === "163");
+      const reuPrimario = !!checkPrimario?.checked;
+      const advogadoConstituido = !!checkAdvogado?.checked;
+      const pagamentoFianca = !!fiancaSim?.checked;
+      const temInafiancavel = selectedCrimes.some((c) => c.infiancavel === true);
+      const reanimadoHp = !!hpSim?.checked;
+      const minutosHp = reanimadoHp
+        ? parseInt(hpMinutos?.value || "0", 10) || 0
+        : 0;
+
+      const detalhesMD =
+        `RÉU PRIMÁRIO: ${reuPrimario ? "SIM" : "NÃO"}\n` +
+        `RÉU REINCIDENTE: ${reuReincidente ? "SIM" : "NÃO"}\n` +
+        `ADVOGADO CONSTITUÍDO: ${advogadoConstituido ? "SIM" : "NÃO"}\n` +
+        `PAGAMENTO DE FIANÇA: ${
+          temInafiancavel ? "INAFIANÇÁVEL" : pagamentoFianca ? "SIM" : "NÃO"
+        }\n` +
+        `REANIMADO NO HP: ${reanimadoHp ? `SIM (${minutosHp} min)` : "NÃO"}`;
+
       const markdown =
         "```md\n" +
         `# RELATÓRIO DE PRISÃO - ADVOCACIA\n\n[IDENTIFICAÇÃO]\nCIDADÃO: ${nomePreso}\nRG/ID: ${rgPreso}\nADVOGADO: ${advogado}\n\n[CRIMES]\n${crimesMD}\n\n[SENTENÇA FINAL]\nPENA: ${
           penaTotalEl.textContent
         }\nMULTA: ${multaTotalEl.textContent}\nFIANÇA: ${
           fiancaOutput.value
-        }\n` +
+        }\n\n[DETALHES]\n${detalhesMD}\n` +
         "\n```";
 
       navigator.clipboard.writeText(markdown).then(() => {
