@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+ï»¿document.addEventListener("DOMContentLoaded", function () {
   const penaTotalEl = document.getElementById("pena-total");
   const multaTotalEl = document.getElementById("multa-total");
   const fiancaOutput = document.getElementById("fianca-output");
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!fiancaOutput) return;
 
     if (temInafiancavel) {
-      fiancaOutput.value = "INAFIANÇÁVEL";
+      fiancaOutput.value = "INAFIANÃ‡ÃVEL";
       fiancaOutput.style.color = "#d32f2f";
     } else {
       fiancaOutput.value = formatCurrency(fianca);
@@ -192,36 +192,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const num = parseInt(onlyNums, 10) || 0;
       el.value = num.toLocaleString("pt-BR");
       atualizarTotais();
-    });
-  }
-
-  const btnEnviar = document.getElementById("btn-enviar");
-  if (btnEnviar) {
-    btnEnviar.addEventListener("click", () => {
-      const nomePreso = document.getElementById("nome")?.value.trim() || "N/I";
-      const rgPreso = document.getElementById("rg")?.value.trim() || "N/I";
-      const advogado = document.getElementById("advogado")?.value.trim() || "N/I";
-
-      if (selectedCrimes.length === 0) {
-        return showAlert("Selecione os crimes antes de enviar!");
-      }
-
-      const crimesMD = selectedCrimes
-        .map((c) => `• Art. ${c.artigo} - ${c.nome}`)
-        .join("\n");
-
-      const markdown =
-        "```md\n" +
-        `# RELATÓRIO DE PRISÃO\n\n[IDENTIFICAÇÃO]\nCIDADÃO: ${nomePreso}\nRG/ID: ${rgPreso}\nADVOGADO: ${advogado}\n\n[CRIMES]\n${crimesMD}\n\n[SENTENÇA FINAL]\nPENA: ${
-          penaTotalEl.textContent
-        }\nMULTA: ${multaTotalEl.textContent}\nFIANÇA: ${
-          fiancaOutput.value
-        }\n\nGerado por: ${document.getElementById("user-name")?.textContent || "Sistema"}` +
-        "\n```";
-
-      navigator.clipboard.writeText(markdown).then(() => {
-        alert("Relatório copiado para o Discord!");
-      });
     });
   }
 
